@@ -264,6 +264,78 @@ DrawAirplane macro row, col, color
     DrawPixel row+3, col-2
 endm
 
+DrawAirplaneHoriz macro row, col, color
+    mov al, color
+
+    DrawPixel row, col-7
+    DrawPixel row, col-6
+    DrawPixel row, col-5
+    DrawPixel row, col-4
+    DrawPixel row, col-3
+    DrawPixel row, col-2
+    DrawPixel row, col-1
+    DrawPixel row, col
+    DrawPixel row, col+1
+    DrawPixel row, col+2
+    DrawPixel row, col+3
+    DrawPixel row, col+4
+
+    DrawPixel row-1, col-5
+    DrawPixel row-1, col-4
+    DrawPixel row-1, col-3
+    DrawPixel row-1, col-2
+    DrawPixel row-1, col-1
+    DrawPixel row-1, col
+    DrawPixel row-1, col+1
+    DrawPixel row-1, col+2
+    DrawPixel row-1, col+3
+    DrawPixel row-1, col+4
+    
+    DrawPixel row+1, col-5
+    DrawPixel row+1, col-4
+    DrawPixel row+1, col-3
+    DrawPixel row+1, col-2
+    DrawPixel row+1, col-1
+    DrawPixel row+1, col
+    DrawPixel row+1, col+1
+    DrawPixel row+1, col+2
+    DrawPixel row+1, col+3
+    DrawPixel row+1, col+4
+
+    DrawPixel row-2, col-1
+    DrawPixel row-3, col-1
+    DrawPixel row-4, col-1
+    DrawPixel row-5, col-1
+    DrawPixel row-6, col-1
+    DrawPixel row+2, col-1
+    DrawPixel row+3, col-1
+    DrawPixel row+4, col-1
+    DrawPixel row+5, col-1
+    DrawPixel row+6, col-1
+
+    DrawPixel row-2, col-2
+    DrawPixel row-3, col-2
+    DrawPixel row-4, col-2
+    DrawPixel row-5, col-2
+    DrawPixel row+2, col-2
+    DrawPixel row+3, col-2
+    DrawPixel row+4, col-2
+    DrawPixel row+5, col-2
+
+    DrawPixel row-2, col+4
+    DrawPixel row-3, col+4
+    DrawPixel row-4, col+4
+    DrawPixel row+2, col+4
+    DrawPixel row+3, col+4
+    DrawPixel row+4, col+4
+
+    DrawPixel row-2, col+3
+    DrawPixel row-3, col+3
+    DrawPixel row+2, col+3
+    DrawPixel row+3, col+3
+
+endm
+
 DrawCircle macro circleCenterX, circleCenterY, radius
     ;C# Code
 ;         int balance;
@@ -283,7 +355,6 @@ DrawCircle macro circleCenterX, circleCenterY, radius
     yplusx dw 0
     yminusx dw 0
     
-    
     ;C# Code
     ;         xoff = 0;
     ;         yoff = radius;
@@ -293,7 +364,6 @@ DrawCircle macro circleCenterX, circleCenterY, radius
     
     Assign balance, radius
     Negate balance
-    
     
     ;C# Code
     ;         while (xoff <= yoff)
@@ -385,6 +455,13 @@ DrawCircle macro circleCenterX, circleCenterY, radius
 
 endm
 
+delay macro
+    MOV CX, 0FH
+    MOV DX, 4240H
+    MOV AH, 86H
+    INT 15H
+endm
+
 main proc far
     mov ax, @data
     mov ds, ax
@@ -437,8 +514,22 @@ main proc far
     DrawAirplane 100, 160, 02h
     DrawAirplane 80, 90, 04h
     DrawAirplane 120, 230, 06h
-
+    delay
     DrawAirplane 150, 130, 08h
+    delay
+    DrawAirplane 150, 130, 00h
+    DrawAirplane 140, 130, 08h
+    delay
+    DrawAirplane 140, 130, 00h
+    DrawAirplane 120, 130, 08h
+    delay
+    DrawAirplane 120, 130, 00h
+    DrawAirplane 100, 130, 08h
+    delay
+    DrawAirplane 100, 130, 00h
+    DrawAirplane 80, 130, 08h
+
+    DrawAirplaneHoriz 150, 160, 02h
 
     exit
 main endp
